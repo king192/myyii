@@ -4,6 +4,14 @@ use yii\web\Controller;
 use yii\web\Cookie;
 
 class HelloController extends Controller{
+	public function _init(){
+		echo 'init';
+	}
+	public function actionHas(){
+		$method = get_class_methods($this);
+		print_r($method);
+
+	}
 	public function actionIndex(){
 		$res = \YII::$app->response;
 		// $res->statusCode = '404';
@@ -39,5 +47,17 @@ class HelloController extends Controller{
 		$c->add(new Cookie($c_data));
 		//remove cookie
 		$c->remove('hello');
+	}
+	//设置缓存
+	public function actionSet(){
+		$cache = \YII::$app->cache;
+		$cache->add('key','value');
+	}
+	//获取缓存
+	public function actionGet(){
+		$cache = \YII::$app->cache;
+		$data = $cache->get('key');
+		print_r($data);
+
 	}
 }
