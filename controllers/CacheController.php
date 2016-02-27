@@ -13,13 +13,13 @@ class CacheController extends Controller{
 		$this->value = isset($_GET['value'])?$_GET['value']:'hello';
 		$this->key = isset($_GET['key'])?$_GET['key']:'key';
 	}
-	//添加缓存，如果缓存已存在则覆盖
+	//添加缓存，如果缓存已存在则忽略
 	public function actionAdd(){
-		$this->cache->add($this->key,$this->value);
+		echo $this->cache->add($this->key,$this->value);
 	}
-	//修改或添加缓存，如果缓存已存在则忽略
+	//修改或添加缓存，如果缓存已存在则覆盖
 	public function actionSet(){
-		$this->cache->set($this->key,$this->value);
+		echo $this->cache->set($this->key,$this->value);
 	}
 	//获取缓存
 	public function actionGet(){
