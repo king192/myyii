@@ -1,0 +1,1 @@
+1.git remote rename [old-remote-name] [new-remote-name]：重命名远程仓库。
