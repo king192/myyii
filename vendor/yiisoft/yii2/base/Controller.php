@@ -82,11 +82,8 @@ class Controller extends Component implements ViewContextInterface
         $this->id = $id;
         $this->module = $module;
         parent::__construct($config);
-<<<<<<< HEAD
-=======
         if(method_exists($this,'_init'))
             $this->_init();
->>>>>>> 9fb47400e71e0cd9fcb7e1cfeeed3daf9243a837
     }
 
     /**
@@ -412,8 +409,6 @@ class Controller extends Component implements ViewContextInterface
     {
         return $this->getView()->render($view, $params, $this);
     }
-<<<<<<< HEAD
-=======
     /**
      * Renders a view without applying layout.
      * This method differs from [[render()]] in that it does not apply any layout.
@@ -426,7 +421,6 @@ class Controller extends Component implements ViewContextInterface
     {
         return $this->getView()->render($view, $params, $this);
     }
->>>>>>> 9fb47400e71e0cd9fcb7e1cfeeed3daf9243a837
 
     /**
      * Renders a view file.
