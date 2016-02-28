@@ -1,1 +1,6 @@
 1.git remote rename [old-remote-name] [new-remote-name]：重命名远程仓库。
+
+2.git里被忽略的目录里排除某些文件或子目录
+
+/node_modules/*
+!/node_modules/layer/layer.js
