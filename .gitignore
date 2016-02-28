@@ -13,13 +13,8 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-<<<<<<< HEAD
-#/vendor
-=======
 #/vendor/*
 #!/vendor/yiisoft/yii2/base/Controller.php
->>>>>>> 9fb47400e71e0cd9fcb7e1cfeeed3daf9243a837
-
 # composer itself is not needed
 composer.phar
 
