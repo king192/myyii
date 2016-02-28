@@ -3,11 +3,11 @@ namespace app\controllers;
 use yii\web\Controller;
 
 class HttpController extends Controller{
-	public function behaviors(){
+	public function _init(){
 		echo '1';
 	}
 	public function actionIndex(){
-		return $this->renderPartial('index');
+		return $this->diaplay('index');
 		// var_dump(get_class_methods($this));
 	}
 }
