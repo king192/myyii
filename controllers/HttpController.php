@@ -8,6 +8,6 @@ class HttpController extends Controller{
 	}
 	public function actionIndex(){
 		return $this->renderPartial('index');
-		// var_dump(get_class_methods($this));
+		var_dump(get_class_methods($this));
 	}
 }
