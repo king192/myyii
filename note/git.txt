@@ -4,3 +4,5 @@
 
 /node_modules/*
 !/node_modules/layer/layer.js
+
+3.git 产生冲突要保留服务器上的版本

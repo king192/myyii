@@ -5,6 +5,6 @@
 	<title>http cache</title>
 </head>
 <body>
-	hello world!!!!!!!
+	<?=$new;?>
 </body>
 </html>
