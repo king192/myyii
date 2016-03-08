@@ -5,3 +5,12 @@
 禁用 未绑定域名访问
 禁用 PHP不安全函数执行
 禁用 外网访问phpmyadmin
+
+
+sql注入
+select * from user where name = 'zhangsan' -- and passwd = 'kdfddk';
+select * from user where name = '';drop table user --
+;drop table user --
+
+select * from ariicles where score < 60 and title like '%' or 1=1 -- %;
+' or 1=1 -- 
