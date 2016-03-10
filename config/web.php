@@ -3,6 +3,11 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+    'modules' => [
+        'article' => [
+            'class' => 'app\modules\article\Article',
+        ],
+    ],
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
