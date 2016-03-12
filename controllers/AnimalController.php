@@ -3,6 +3,7 @@ namespace app\controllers;
 // use yii\web\Controller;
 use vendor\animal\Cat;
 
+//事件控制器示例
 class AnimalController extends \yii\web\Controller{
 	public function actionIndex(){
 		$cat = new Cat;
@@ -36,5 +37,26 @@ class AnimalController extends \yii\web\Controller{
 		$cat -> shout1();
 		$cat2 -> shout1();
 
+	}
+	public function actionEvent1(){
+		$cat = new Cat;
+		$cat2 = new Cat;
+		//类级别绑定
+		$mourse = new \vendor\animal\Mourse;
+		//匿名函数
+		\yii\base\Event::on(Cat::className(),'miao',function(){
+			echo 'goods<br>';
+		});
+		$cat -> shout1();
+		$cat2 -> shout1();
+
+	}
+	public function actionApp(){
+		//绑定事件---请求完成
+		\YII::$app->on(\yii\base\Application::EVENT_AFTER_REQUEST,function(){
+			echo 'event after request';
+		});
+
+		echo 'request<br>';
 	}
 }
