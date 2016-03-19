@@ -1,0 +1,31 @@
+doracms是国人开发的一款基于nodejs+redis+mongodb的cms，虽然bug不少，但还是挺优秀的一款cms，本人用ab工具测试，发现性能要比keystone好得多，
+于是designed用doracms做二次开发。
+
+doracms bug：
+使用中我发现后台发表文章时保存的草稿竟然能在前台最热文章列表看到标题，然后点进去是404,还有搜索文章时也能搜到
+
+方案：
+最热文章列表bug：
+文件:models/db/siteFunc.js
+setDataForIndex函数
+hotItemListData: this.getHotItemListData({}),修改为hotItemListData: this.getHotItemListData({'state':true}),
+setDetailInfo函数
+hotItemListData: this.getHotItemListData({}),修改为hotItemListData: this.getHotItemListData({'state':true}),
+
+搜索文章列表bug：
+文件:models/Dbopt.js
+getPaginationResult函数
+修改对应的地方为：
+ if(q && q.length > 1){ // 多条件只要其中一条符合
+            resultList = obj.find({'state':true}).or(q,filed).sort(sq).skip(startNum).limit(limit);
+            resultNum = obj.find({'state':true}).or(q,filed).count();
+        }else{
+            q.state = true;
+            resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
+            resultNum = obj.find(q,filed).count();
+        }
+
+说明:由于当时隐藏了最新文章列表，忽略了，不知道以上修改有木有改好，大家可以自己测试一下
+
+好了，把我上线的网站亮出来，大家有什么意见或者建议可以联系我
+http://www.55com.org
