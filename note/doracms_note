@@ -1,0 +1,27 @@
+doracms_note
+
+hot article list bug:
+
+siteFun.js
+
+setDataForIndex function in return of the  hotItemListData: this.getHotItemListData({}),
+fix to  hotItemListData: this.getHotItemListData({'state':true}),
+
+in return of the function setDetailInfo:
+            hotItemListData: this.getHotItemListData({}),
+  fix to:
+            hotItemListData: this.getHotItemListData({'state':true}),
+
+search article list bug which the result include draft:
+file:Dbopt.js
+function:getPaginationResult
+fix to:
+
+        if(q && q.length > 1){ // 多条件只要其中一条符合
+            resultList = obj.find({'state':true}).or(q,filed).sort(sq).skip(startNum).limit(limit);
+            resultNum = obj.find({'state':true}).or(q,filed).count();
+        }else{
+            q.state = true;
+            resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
+            resultNum = obj.find(q,filed).count();
+        }
