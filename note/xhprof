@@ -1,0 +1,119 @@
+xhprof是一款php性能分析工具，关于安装的文章到处都是，这里就不说了，
+xhprof安装使用中应该注意的问题：
+安装好后用phpinfo函数查看是否加载模块
+
+<?php
+echo phpinfo();
+
+
+木有加载的话到php.ini中添加配置
+
+extension=xhprof.so
+xhprof.output_dir=/tmp/xhprof/;结果文件输出路径，自定义，但要注意权限
+
+下面给出thinkphp中使用的代码示例：
+<?php
+namespace Home\Controller;
+use Think\Controller;
+
+class XhprofController extends Controller{
+	public function index(){
+		// import('Vendor.File.Test');
+		// start profiling
+		$XHPROF_ROOT  = '/tmp';
+		xhprof_enable();
+
+		// run program
+		dump('hello');
+
+		// stop profiler
+		$xhprof_data = xhprof_disable();
+
+		//
+		// Saving the XHProf run
+		// using the default implementation of iXHProfRuns.
+		//
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+
+		$xhprof_runs = new \XHProfRuns_Default();
+
+		// Save the run under a namespace "xhprof_foo".
+		//
+		// **NOTE**:
+		// By default save_run() will automatically generate a unique
+		// run id for you. [You can override that behavior by passing
+		// a run id (optional arg) to the save_run() method instead.]
+		//
+		$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_foo");
+
+		echo "---------------\n".
+		     "Assuming you have set up the http based UI for \n".
+		     "XHProf at some address, you can view run at \n".
+		     "<a href='http://localhost/xhprof_html/index.php?run=$run_id&source=xhprof_foo' target='_blank'>http://localhost/xhprof_html/index.php?run=$run_id&source=xhprof_foo</a>\n".
+		     "---------------\n";
+			}
+}
+
+英文好的童鞋可以查看xhprof_html/docs/index.html
+值得注意的地方是
+include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+本人在ubuntu下，可以使用局对路径，就是可以是网站目录外
+http://localhost/xhprof_html/index.php?run=$run_id&source=xhprof_foo
+localhost网站根目录下有xhprof_html和xhprof_lib两个内容
+
+$xhprof_runs = new \XHProfRuns_Default();
+new的XHProfRuns_Default类前面应该加个\
+
+另外还有一个分析结果的画图工具，下面链接罗列了各种版本及其md5,选择相应的下载就好
+http://www.graphviz.org/pub/graphviz/stable/SOURCES/
+
+另外为了使用方便我们可以封装一个类
+/ThinkPHP/Library/Vendor/Xhprof/Xhprof.class.php
+<?php
+namespace Vendor\Xhprof;
+
+class Xhprof {
+	public static function s(){
+		// start profiling
+		xhprof_enable();
+	}
+
+	public static function e(){
+
+		// stop profiler
+		$xhprof_data = xhprof_disable();
+
+		//
+		// Saving the XHProf run
+		// using the default implementation of iXHProfRuns.
+		//
+		$XHPROF_ROOT  = '/tmp';
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+
+		$xhprof_runs = new \XHProfRuns_Default();
+
+		// Save the run under a namespace "xhprof_foo".
+		//
+		// **NOTE**:
+		// By default save_run() will automatically generate a unique
+		// run id for you. [You can override that behavior by passing
+		// a run id (optional arg) to the save_run() method instead.]
+		//
+		$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_foo");
+
+		echo "---------------\n".
+		     "Assuming you have set up the http based UI for \n".
+		     "XHProf at some address, you can view run at \n".
+		     "<a href='http://localhost/xhprof_html/index.php?run=$run_id&source=xhprof_foo' target='_blank'>http://localhost/xhprof_html/index.php?run=$run_id&source=xhprof_foo</a>\n".
+		     "---------------\n";
+	}
+}
+
+使用示例：
+
+		\Vendor\Xhprof\Xhprof::s();
+		dump(true);
+		\Vendor\Xhprof\Xhprof::e();
+好了，摆了个白
